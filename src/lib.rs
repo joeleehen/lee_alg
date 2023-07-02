@@ -27,7 +27,13 @@ impl Matrix {
         // build matrix from nested vectors
         let mut matrix = Vec::new();
 
+        let size = rows.len();
         for row in rows {
+            // first ensure each row vector is the proper length
+            // TODO: better error handling
+            if size != row.len() {
+                panic!("Row vector {:?} must have {} elements", row, size);
+            }
             matrix.push(row);
         }
 
@@ -44,4 +50,8 @@ impl Matrix {
     pub fn element(&self, i: i64, j: i64) -> u64 {
         self.mat[(i - 1) as usize][(j - 1) as usize]
     }
+
+    /* pub fn is_square(&self) -> bool {
+        let size = self.mat.len();
+    } */
 }

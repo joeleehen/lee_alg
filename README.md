@@ -7,8 +7,9 @@
 ---
 
   There are a few concepts I encountered in class that I thought lent themselves well to a programmatic approach. Here's a list of functionality I'd like to add:
+  - [ ] extracting column vectors from a matrix (and vice versa)
   - [ ] Enforcing square matrices on construction
-  - [ ] Calculating determinants {hence the square requirement)
+  - [ ] Calculating determinants (hence the square requirement)
   - [ ] Dot products
   - [ ] Gram-Schmidt Orthogonalization Process
   - [ ] Transposition
