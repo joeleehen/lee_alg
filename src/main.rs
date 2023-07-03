@@ -9,4 +9,12 @@ fn main() {
     } else {
         println!("not square");
     }
+
+    println!();
+    println!("number of rows: {}", test.nrow());
+    println!("number of columns: {}", test.ncol());
+
+    println!();
+    println!("extracting columns of matrix");
+    println!("{:?}", test.to_columns());
 }

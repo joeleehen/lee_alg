@@ -43,20 +43,31 @@ impl Matrix {
         mat
     }
 
-    pub fn ncol(&self) -> usize {
+    pub fn nrow(&self) -> usize {
         self.mat.len()
     }
 
-    pub fn nrow(&self) -> usize {
+    pub fn ncol(&self) -> usize {
         self.mat[0].len()
     }
 
     pub fn element(&self, i: i64, j: i64) -> u64 {
-        self.mat[(i - 1) as usize][(j - 1) as usize]
+        self.mat[(i) as usize][(j) as usize]
     }
 
     pub fn is_square(&self) -> bool {
         self.nrow() == self.ncol()
     }
 
+    pub fn to_columns(&self) -> Vec<Vec<u64>> {
+        let mut columns = Vec::new();
+        for i in 0..self.ncol() {
+            let mut col = Vec::new();
+            for j in 0..self.nrow() {
+                col.push(self.element(j as i64, i as i64));
+            }
+            columns.push(col);
+        }
+        columns
+    }
 }
