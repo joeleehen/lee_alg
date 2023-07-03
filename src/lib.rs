@@ -27,7 +27,7 @@ impl Matrix {
         // build matrix from nested vectors
         let mut matrix = Vec::new();
 
-        let size = rows.len();
+        let size = rows[0].len();    // enforce ncol by first row entered
         for row in rows {
             // first ensure each row vector is the proper length
             // TODO: better error handling
@@ -43,15 +43,20 @@ impl Matrix {
         mat
     }
 
-    pub fn size(&self) -> usize {
+    pub fn ncol(&self) -> usize {
         self.mat.len()
+    }
+
+    pub fn nrow(&self) -> usize {
+        self.mat[0].len()
     }
 
     pub fn element(&self, i: i64, j: i64) -> u64 {
         self.mat[(i - 1) as usize][(j - 1) as usize]
     }
 
-    /* pub fn is_square(&self) -> bool {
-        let size = self.mat.len();
-    } */
+    pub fn is_square(&self) -> bool {
+        self.nrow() == self.ncol()
+    }
+
 }
