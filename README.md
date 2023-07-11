@@ -10,7 +10,7 @@
   - [x] extracting column vectors from a matrix (and vice versa)
   - [x] Enforcing square matrices on construction
   - [ ] Calculating determinants (hence the square requirement)
-  - [ ] Dot products
+  - [x] Dot products
   - [ ] Gram-Schmidt Orthogonalization Process
   - [ ] Transposition
   - [ ] Documentation for each method
