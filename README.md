@@ -13,6 +13,7 @@
   - [ ] Dot products
   - [ ] Gram-Schmidt Orthogonalization Process
   - [ ] Transposition
+  - [ ] Documentation for each method
 
 
 I don't wanna do any row reduction so I pretend it doesn't exist 😴😇
