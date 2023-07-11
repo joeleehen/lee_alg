@@ -4,6 +4,34 @@ pub struct Matrix {
     mat: Vec<Vec<u64>>,
 }
 
+pub struct Column {
+    col: Vec<u64>,
+}
+
+impl fmt::Display for Column {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let mut fmt_str = String::new();
+        let newline = '\n';
+
+        let col = &self.col;
+        for elem in col {
+            let elem_str = elem.to_string();
+            fmt_str.push_str(&elem_str);
+            fmt_str.push(newline);
+        }
+        write!(f, "{}", fmt_str)
+    }
+}
+
+impl Column {
+    pub fn new(elems: Vec<u64>) -> Column {
+        let column = Column {
+            col: elems,
+        };
+        column
+    }
+}
+
 // __str__ display format
 impl fmt::Display for Matrix {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -59,14 +87,14 @@ impl Matrix {
         self.nrow() == self.ncol()
     }
 
-    pub fn to_columns(&self) -> Vec<Vec<u64>> {
+    pub fn to_columns(&self) -> Vec<Column> {
         let mut columns = Vec::new();
         for i in 0..self.ncol() {
             let mut col = Vec::new();
             for j in 0..self.nrow() {
                 col.push(self.element(j as i64, i as i64));
             }
-            columns.push(col);
+            columns.push(Column::new(col));
         }
         columns
     }

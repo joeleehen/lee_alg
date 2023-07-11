@@ -16,5 +16,8 @@ fn main() {
 
     println!();
     println!("extracting columns of matrix");
-    println!("{:?}", test.to_columns());
+    
+    for column in test.to_columns() {
+        println!("{}", column);
+    }
 }
