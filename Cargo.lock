@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "leeAlg"
+name = "lee_alg"
 version = "0.1.0"

@@ -30,6 +30,21 @@ impl Column {
         };
         column
     }
+
+    // calculate dot product of two column vectors
+    pub fn dot(&self, other: &Column) -> u64 {
+        if &self.col.len() == &other.col.len() {
+            let mut sum = 0;
+            // iterate through each col
+            for i in 0..self.col.len() {
+                // and multiply the elements
+                sum += &self.col[i] * &other.col[i]
+            }
+            sum
+        } else {
+            panic!("Both vectors should be of the same size!");
+        }
+    }
 }
 
 // __str__ display format
