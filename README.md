@@ -12,8 +12,8 @@
   - [ ] Calculating determinants (hence the square requirement)
   - [x] Dot products
   - [ ] Gram-Schmidt Orthogonalization Process
-  - [ ] Transposition
+  - [x] Transposition
   - [ ] Documentation for each method
-
+  - [ ] Terminal UI for matrix operations
 
 I don't wanna do any row reduction so I pretend it doesn't exist 😴😇

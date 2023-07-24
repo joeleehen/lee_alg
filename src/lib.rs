@@ -1,5 +1,6 @@
 use std::fmt;
 
+#[derive(PartialEq, Debug)]
 pub struct Matrix {
     mat: Vec<Vec<u64>>,
 }
@@ -25,10 +26,16 @@ impl fmt::Display for Column {
 
 impl Column {
     pub fn new(elems: Vec<u64>) -> Column {
-        let column = Column {
-            col: elems,
-        };
+        let column = Column { col: elems };
         column
+    }
+
+    pub fn to_vector(&self) -> Vec<u64> {
+        let mut vectr = Vec::new();
+        for elem in &self.col {
+            vectr.push(*elem);
+        }
+        vectr
     }
 
     // calculate dot product of two column vectors
@@ -70,7 +77,7 @@ impl Matrix {
         // build matrix from nested vectors
         let mut matrix = Vec::new();
 
-        let size = rows[0].len();    // enforce ncol by first row entered
+        let size = rows[0].len(); // enforce ncol by first row entered
         for row in rows {
             // first ensure each row vector is the proper length
             // TODO: better error handling
@@ -80,9 +87,7 @@ impl Matrix {
             matrix.push(row);
         }
 
-        let mat = Matrix {
-            mat: matrix,
-        };
+        let mat = Matrix { mat: matrix };
         mat
     }
 
@@ -112,5 +117,15 @@ impl Matrix {
             columns.push(Column::new(col));
         }
         columns
+    }
+
+    pub fn transpose(&self) -> Matrix {
+        let cols = &self.to_columns();
+        let mut vec_cols = Vec::new();
+
+        for column in cols {
+            vec_cols.push(column.to_vector());
+        }
+        Matrix::new(vec_cols)
     }
 }
