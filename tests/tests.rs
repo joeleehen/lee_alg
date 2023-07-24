@@ -57,3 +57,22 @@ fn transpose() {
     let b = Matrix::new(vec![vec![1, 4], vec![2, 5], vec![3, 6]]);
     assert_eq!(a.transpose(), b);
 }
+
+#[test]
+#[should_panic]
+fn determinant() {
+    let a = Matrix::new(vec![vec![1, 2, 3], vec![4, 5, 6]]);
+    a.determinant();
+}
+
+#[test]
+fn det_trivial() {
+    let a = Matrix::new(vec![vec![420]]);
+    assert_eq!(420, a.determinant());
+}
+
+#[test]
+fn det_two() {
+    let a = Matrix::new(vec![vec![1, 2], vec![3, 4]]);
+    assert_eq!(a.determinant(), -2);
+}

@@ -2,11 +2,11 @@ use std::fmt;
 
 #[derive(PartialEq, Debug)]
 pub struct Matrix {
-    mat: Vec<Vec<u64>>,
+    mat: Vec<Vec<i64>>,
 }
 
 pub struct Column {
-    col: Vec<u64>,
+    col: Vec<i64>,
 }
 
 impl fmt::Display for Column {
@@ -25,12 +25,12 @@ impl fmt::Display for Column {
 }
 
 impl Column {
-    pub fn new(elems: Vec<u64>) -> Column {
+    pub fn new(elems: Vec<i64>) -> Column {
         let column = Column { col: elems };
         column
     }
 
-    pub fn to_vector(&self) -> Vec<u64> {
+    pub fn to_vector(&self) -> Vec<i64> {
         let mut vectr = Vec::new();
         for elem in &self.col {
             vectr.push(*elem);
@@ -39,7 +39,7 @@ impl Column {
     }
 
     // calculate dot product of two column vectors
-    pub fn dot(&self, other: &Column) -> u64 {
+    pub fn dot(&self, other: &Column) -> i64 {
         if &self.col.len() == &other.col.len() {
             let mut sum = 0;
             // iterate through each col
@@ -73,7 +73,7 @@ impl fmt::Display for Matrix {
 }
 
 impl Matrix {
-    pub fn new(rows: Vec<Vec<u64>>) -> Matrix {
+    pub fn new(rows: Vec<Vec<i64>>) -> Matrix {
         // build matrix from nested vectors
         let mut matrix = Vec::new();
 
@@ -99,7 +99,7 @@ impl Matrix {
         self.mat[0].len()
     }
 
-    pub fn element(&self, i: i64, j: i64) -> u64 {
+    pub fn element(&self, i: i64, j: i64) -> i64 {
         self.mat[(i) as usize][(j) as usize]
     }
 
@@ -127,5 +127,25 @@ impl Matrix {
             vec_cols.push(column.to_vector());
         }
         Matrix::new(vec_cols)
+    }
+
+    pub fn determinant(&self) -> i64 {
+        if self.is_square() {
+            // one-dimensional matrix
+            if self.ncol() == 1 {
+                self.element(0, 0)
+
+            // two-by-two matrix
+            } else if self.ncol() == 2 {
+                let det = (self.element(0, 0) * self.element(1, 1))
+                    - (self.element(1, 0) * self.element(0, 1));
+                det
+            // everything else
+            } else {
+                0
+            }
+        } else {
+            panic!("determinant does not exist for non-square matrices!");
+        }
     }
 }
