@@ -30,6 +30,7 @@ impl Column {
         column
     }
 
+    // TODO why is this here I forgor
     pub fn to_vector(&self) -> Vec<i64> {
         let mut vectr = Vec::new();
         for elem in &self.col {
@@ -129,6 +130,18 @@ impl Matrix {
         Matrix::new(vec_cols)
     }
 
+    pub fn clone(&self) -> Matrix {
+        let mut copy_vec = Vec::new();
+        for row in &self.mat {
+            let mut row_copy = Vec::new();
+            for element in row {
+                row_copy.push(*element);
+            }
+            copy_vec.push(row_copy);
+        }
+        Matrix::new(copy_vec)
+    }
+
     pub fn determinant(&self) -> i64 {
         if self.is_square() {
             // one-dimensional matrix
@@ -142,7 +155,27 @@ impl Matrix {
                 det
             // everything else
             } else {
-                0
+                // half of LU Decomposition
+                let copy = &mut self.clone(); // mutable copy for row reduction
+                for i in 0..&self.ncol() - 1 {
+                    // TODO: this is ugly. prolly refactor element() to accept
+                    // generic integers rather than i64
+                    let diagonal = copy.element(i as i64, i as i64);
+                    for j in i + 1..copy.ncol() {
+                        let combination = copy.element(j as i64, i as i64) / diagonal;
+                        for k in i..copy.ncol() {
+                            // copy.element(j as i64, k as i64) -=
+                            //     combination * (copy.element(i as i64, k as i64));
+                            copy.mat[j][k] -= combination * copy.element(i as i64, k as i64);
+                        }
+                    }
+                }
+                // product of diagonals from U yields determinant of original matrix
+                let mut product = 1;
+                for i in 0..copy.ncol() {
+                    product *= copy.element(i as i64, i as i64);
+                }
+                product
             }
         } else {
             panic!("determinant does not exist for non-square matrices!");

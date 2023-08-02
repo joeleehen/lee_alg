@@ -76,3 +76,15 @@ fn det_two() {
     let a = Matrix::new(vec![vec![1, 2], vec![3, 4]]);
     assert_eq!(a.determinant(), -2);
 }
+
+#[test]
+fn det_big() {
+    let a = Matrix::new(vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]]);
+    assert_eq!(a.determinant(), 0);
+}
+
+#[test]
+fn det_big_two() {
+    let a = Matrix::new(vec![vec![2, 1, 0], vec![3, 1, 5], vec![-2, 2, 0]]);
+    assert_eq!(a.determinant(), -30);
+}
