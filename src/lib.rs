@@ -2,11 +2,11 @@ use std::fmt;
 
 #[derive(PartialEq, Debug)]
 pub struct Matrix {
-    mat: Vec<Vec<i64>>,
+    mat: Vec<Vec<f64>>,
 }
 
 pub struct Column {
-    col: Vec<i64>,
+    col: Vec<f64>,
 }
 
 impl fmt::Display for Column {
@@ -25,13 +25,19 @@ impl fmt::Display for Column {
 }
 
 impl Column {
-    pub fn new(elems: Vec<i64>) -> Column {
-        let column = Column { col: elems };
+    pub fn new<T: Into<f64> + std::fmt::Debug>(elems: Vec<T>) -> Column {
+        // let column = Column { col: elems };
+        // cast each element of elems vector to a float
+        let mut f_elems = Vec::new();
+        for elem in elems {
+            f_elems.push(elem.into());
+        }
+        let column = Column { col: f_elems };
         column
     }
 
     // TODO why is this here I forgor
-    pub fn to_vector(&self) -> Vec<i64> {
+    pub fn to_vector(&self) -> Vec<f64> {
         let mut vectr = Vec::new();
         for elem in &self.col {
             vectr.push(*elem);
@@ -40,9 +46,9 @@ impl Column {
     }
 
     // calculate dot product of two column vectors
-    pub fn dot(&self, other: &Column) -> i64 {
+    pub fn dot(&self, other: &Column) -> f64 {
         if &self.col.len() == &other.col.len() {
-            let mut sum = 0;
+            let mut sum = 0.0;
             // iterate through each col
             for i in 0..self.col.len() {
                 // and multiply the elements
@@ -74,7 +80,7 @@ impl fmt::Display for Matrix {
 }
 
 impl Matrix {
-    pub fn new(rows: Vec<Vec<i64>>) -> Matrix {
+    pub fn new<T: Into<f64> + std::fmt::Debug>(rows: Vec<Vec<T>>) -> Matrix {
         // build matrix from nested vectors
         let mut matrix = Vec::new();
 
@@ -85,7 +91,13 @@ impl Matrix {
             if size != row.len() {
                 panic!("Row vector {:?} must have {} elements", row, size);
             }
-            matrix.push(row);
+            // matrix.push(row);
+            // cast each element to a float before creating matrix object
+            let mut floatrow = Vec::new();
+            for element in row {
+                floatrow.push(element.into());
+            }
+            matrix.push(floatrow);
         }
 
         let mat = Matrix { mat: matrix };
@@ -100,7 +112,7 @@ impl Matrix {
         self.mat[0].len()
     }
 
-    pub fn element(&self, i: i64, j: i64) -> i64 {
+    pub fn element(&self, i: i64, j: i64) -> f64 {
         self.mat[(i) as usize][(j) as usize]
     }
 
@@ -142,7 +154,7 @@ impl Matrix {
         Matrix::new(copy_vec)
     }
 
-    pub fn determinant(&self) -> i64 {
+    pub fn determinant(&self) -> f64 {
         if self.is_square() {
             // one-dimensional matrix
             if self.ncol() == 1 {
@@ -171,7 +183,7 @@ impl Matrix {
                     }
                 }
                 // product of diagonals from U yields determinant of original matrix
-                let mut product = 1;
+                let mut product = 1.0;
                 for i in 0..copy.ncol() {
                     product *= copy.element(i as i64, i as i64);
                 }

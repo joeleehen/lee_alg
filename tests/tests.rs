@@ -40,7 +40,7 @@ fn dot_prod() {
     let tester = Matrix::new(vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]]);
     let col1 = &tester.to_columns()[0];
     let col2 = &tester.to_columns()[1];
-    assert_eq!(78, col1.dot(&col2));
+    assert_eq!(78.0, col1.dot(&col2));
 }
 
 #[test]
@@ -68,23 +68,23 @@ fn determinant() {
 #[test]
 fn det_trivial() {
     let a = Matrix::new(vec![vec![420]]);
-    assert_eq!(420, a.determinant());
+    assert_eq!(420.0, a.determinant());
 }
 
 #[test]
 fn det_two() {
     let a = Matrix::new(vec![vec![1, 2], vec![3, 4]]);
-    assert_eq!(a.determinant(), -2);
+    assert_eq!(a.determinant(), -2.0);
 }
 
 #[test]
 fn det_big() {
     let a = Matrix::new(vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]]);
-    assert_eq!(a.determinant(), 0);
+    assert_eq!(a.determinant(), 0.0);
 }
 
 #[test]
 fn det_big_two() {
     let a = Matrix::new(vec![vec![2, 1, 0], vec![3, 1, 5], vec![-2, 2, 0]]);
-    assert_eq!(a.determinant(), -30);
+    assert_eq!(a.determinant(), -30.0);
 }
