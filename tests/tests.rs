@@ -88,3 +88,18 @@ fn det_big_two() {
     let a = Matrix::new(vec![vec![2, 1, 0], vec![3, 1, 5], vec![-2, 2, 0]]);
     assert_eq!(a.determinant(), -30.0);
 }
+
+#[test]
+fn add() {
+    let a = Matrix::new(vec![vec![1, 2], vec![3, 4]]);
+    let b = Matrix::new(vec![vec![5, 6], vec![7, 8]]);
+    assert_eq!(a + b, Matrix::new(vec![vec![6, 8], vec![10, 12]]));
+}
+
+#[test]
+#[should_panic]
+fn bad_add() {
+    let a = Matrix::new(vec![vec![1, 2], vec![3, 4]]);
+    let b = Matrix::new(vec![vec![1]]);
+    let _ = a + b;
+}

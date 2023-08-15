@@ -1,4 +1,5 @@
 use std::fmt;
+use std::ops::Add;
 
 #[derive(PartialEq, Debug)]
 pub struct Matrix {
@@ -76,6 +77,27 @@ impl fmt::Display for Matrix {
             fmt_str.push_str("\n");
         }
         write!(f, "{}", fmt_str)
+    }
+}
+
+impl Add for Matrix {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self {
+        if self.ncol() != other.ncol() || self.nrow() != other.nrow() {
+            panic!("matrices must have similar dimensions to be added together!");
+        } else {
+            let mut sum = Vec::new();
+            for i in 0..self.ncol() {
+                let mut new_row = Vec::new();
+                for j in 0..self.nrow() {
+                    new_row.push(self.mat[i][j] + other.mat[i][j]);
+                }
+                sum.push(new_row);
+            }
+
+            Self { mat: sum }
+        }
     }
 }
 
