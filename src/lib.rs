@@ -1,5 +1,5 @@
-use std::fmt;
-use std::ops::Add;
+use std::ops::Mul;
+use std::{fmt, ops::Add};
 
 #[derive(PartialEq, Debug)]
 pub struct Matrix {
@@ -97,6 +97,34 @@ impl Add for Matrix {
             }
 
             Self { mat: sum }
+        }
+    }
+}
+
+impl Mul for Matrix {
+    type Output = Self;
+
+    fn mul(self, other: Self) -> Self {
+        if self.ncol() != other.nrow() {
+            panic!("matrices cannot be multiplied")
+        } else {
+            // TODO: impl this dumbass
+            // dimensions of product = self.nrow x other.ncol
+            let mut product = Vec::new();
+            for row in self.mat {
+                let mut prod_row = Vec::new();
+                for col in other.to_columns() {
+                    let mut sumprod = 0.0;
+                    // multiply each element and add together
+                    for i in 0..row.len() {
+                        let multiplied = row[i] * col.col[i];
+                        sumprod += multiplied;
+                    }
+                    prod_row.push(sumprod);
+                }
+                product.push(prod_row);
+            }
+            Self { mat: product }
         }
     }
 }

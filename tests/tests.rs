@@ -103,3 +103,19 @@ fn bad_add() {
     let b = Matrix::new(vec![vec![1]]);
     let _ = a + b;
 }
+
+#[test]
+fn multiply() {
+    let a = Matrix::new(vec![vec![1, 2], vec![3, 4]]);
+    let b = Matrix::new(vec![vec![5, 6], vec![7, 8]]);
+    let product = Matrix::new(vec![vec![19, 22], vec![43, 50]]);
+    assert_eq!(a * b, product);
+}
+
+#[test]
+fn multiple_one() {
+    let a = Matrix::new(vec![vec![2]]);
+    let b = Matrix::new(vec![vec![2]]);
+    let product = Matrix::new(vec![vec![4]]);
+    assert_eq!(a * b, product);
+}
