@@ -243,4 +243,11 @@ impl Matrix {
             panic!("determinant does not exist for non-square matrices!");
         }
     }
+
+    pub fn invert(&self) -> Matrix {
+        if !self.is_square() || self.determinant() == 0.0 {
+            panic!("matrix is singular!");
+        }
+        Matrix::new(vec![vec![2]])
+    }
 }

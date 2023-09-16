@@ -119,3 +119,27 @@ fn multiple_one() {
     let product = Matrix::new(vec![vec![4]]);
     assert_eq!(a * b, product);
 }
+
+#[test]
+#[should_panic]
+fn bad_invert() {
+    let a = Matrix::new(vec![vec![1, 2, 3], vec![4, 5, 6]]);
+    a.invert();
+}
+
+#[test]
+#[should_panic]
+fn singular_invert() {
+    let a = Matrix::new(vec![vec![1, 1], vec![1, 1]]);
+    a.invert();
+}
+
+#[test]
+fn invert() {
+    let a = Matrix::new(vec![vec![1, 2], vec![3, 4]]);
+    let inverted = a.invert();
+    assert_eq!(
+        inverted,
+        Matrix::new(vec![vec![-2.0, 1.0], vec![1.5, -0.5]])
+    );
+}
