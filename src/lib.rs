@@ -101,15 +101,13 @@ impl Add for Matrix {
     }
 }
 
-impl Mul for Matrix {
+impl Mul<Matrix> for Matrix {
     type Output = Self;
 
     fn mul(self, other: Self) -> Self {
         if self.ncol() != other.nrow() {
             panic!("matrices cannot be multiplied")
         } else {
-            // TODO: impl this dumbass
-            // dimensions of product = self.nrow x other.ncol
             let mut product = Vec::new();
             for row in self.mat {
                 let mut prod_row = Vec::new();
@@ -126,6 +124,23 @@ impl Mul for Matrix {
             }
             Self { mat: product }
         }
+    }
+}
+
+impl<T: Into<f64> + Copy> Mul<T> for Matrix {
+    type Output = Self;
+
+    fn mul(self, scalar: T) -> Self {
+        let mut scalar_prod = Vec::new();
+        for row in self.mat {
+            let mut prod_row = Vec::new();
+            for elem in row {
+                prod_row.push(elem * scalar.into());
+            }
+            scalar_prod.push(prod_row);
+        }
+
+        Self { mat: scalar_prod }
     }
 }
 
@@ -242,12 +257,5 @@ impl Matrix {
         } else {
             panic!("determinant does not exist for non-square matrices!");
         }
-    }
-
-    pub fn invert(&self) -> Matrix {
-        if !self.is_square() || self.determinant() == 0.0 {
-            panic!("matrix is singular!");
-        }
-        Matrix::new(vec![vec![2]])
     }
 }
