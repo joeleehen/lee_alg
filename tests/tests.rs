@@ -126,3 +126,31 @@ fn scalar_mul() {
     let prod = Matrix::new(vec![vec![2, 4], vec![6, 8]]);
     assert_eq!(a * 2, prod);
 }
+
+#[test]
+fn invert_one() {
+    let a = Matrix::new(vec![vec![4]]);
+    let inverted = Matrix::new(vec![vec![0.25]]);
+    assert_eq!(a.invert(), inverted);
+}
+
+#[test]
+fn invert_two() {
+    let a = Matrix::new(vec![vec![1, 2], vec![3, 4]]);
+    let inverted = Matrix::new(vec![vec![-2.0, 1.0], vec![1.5, -0.5]]);
+    assert_eq!(a.invert(), inverted);
+}
+
+#[test]
+#[should_panic]
+fn unsquare_invert() {
+    let a = Matrix::new(vec![vec![1, 2, 3], vec![4, 5, 6]]);
+    a.invert();
+}
+
+#[test]
+#[should_panic]
+fn singular_invert() {
+    let a = Matrix::new(vec![vec![3, 6], vec![2, 4]]);
+    a.invert();
+}

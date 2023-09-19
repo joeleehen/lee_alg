@@ -258,4 +258,30 @@ impl Matrix {
             panic!("determinant does not exist for non-square matrices!");
         }
     }
+
+    pub fn invert(&self) -> Matrix {
+        if !self.is_square() {
+            panic!("matrix is not square!");
+        }
+        if self.determinant() == 0.0 {
+            panic!("matrix is singular!");
+        }
+
+        if self.mat.len() >= 3 {
+            panic!("uhhhhhh idk man matrix too big");
+        }
+
+        if self.mat.len() == 1 {
+            Matrix::new(vec![vec![{ 1.0 / self.mat[0][0] }]])
+        } else if self.mat.len() == 2 {
+            let fac = 1.0 / self.determinant();
+            let new_mat = Matrix::new(vec![
+                vec![self.element(1, 1), -1.0 * self.element(0, 1)],
+                vec![-1.0 * self.element(1, 0), self.element(0, 0)],
+            ]);
+            new_mat * fac
+        } else {
+            panic!("uhhhh idk man matrix too big");
+        }
+    }
 }
