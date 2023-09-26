@@ -1,5 +1,5 @@
 use std::ops::Mul;
-use std::{fmt, ops::Add};
+use std::{fmt, ops::Add, ops::Sub};
 
 #[derive(PartialEq, Debug)]
 pub struct Matrix {
@@ -101,6 +101,25 @@ impl Add for Matrix {
     }
 }
 
+impl Sub for Matrix {
+    type Output = Self;
+
+    fn sub(self, other: Self) -> Self {
+        if self.ncol() != other.ncol() || self.nrow() != other.nrow() {
+            panic!("matrices must have similar dimensions to be subtracted");
+        } else {
+            let mut difference = Vec::new();
+            for i in 0..self.ncol() {
+                let mut new_row = Vec::new();
+                for j in 0..self.nrow() {
+                    new_row.push(self.mat[i][j] - other.mat[i][j]);
+                }
+                difference.push(new_row);
+            }
+            Self { mat: difference }
+        }
+    }
+}
 impl Mul<Matrix> for Matrix {
     type Output = Self;
 

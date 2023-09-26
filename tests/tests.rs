@@ -154,3 +154,19 @@ fn singular_invert() {
     let a = Matrix::new(vec![vec![3, 6], vec![2, 4]]);
     a.invert();
 }
+
+#[test]
+fn subtract() {
+    let a = Matrix::new(vec![vec![1, 2], vec![3, 4]]);
+    let b = Matrix::new(vec![vec![0, 2], vec![3, 3]]);
+    let diff = Matrix::new(vec![vec![1, 0], vec![0, 1]]);
+    assert_eq!(a - b, diff);
+}
+
+#[test]
+#[should_panic]
+fn bad_subtract() {
+    let a = Matrix::new(vec![vec![1, 2], vec![3, 4]]);
+    let b = Matrix::new(vec![vec![1, 2, 3], vec![4, 5, 6]]);
+    a - b;
+}
